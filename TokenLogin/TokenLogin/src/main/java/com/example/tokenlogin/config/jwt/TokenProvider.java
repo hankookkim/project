@@ -36,7 +36,7 @@ public class TokenProvider {
         Date now = new Date(); //현재 시간을 구하는 코드. new Date()는 현재 시간을 밀리초 단위로 반환
         return makeToken(
                 member,
-                new Date(now.getTime()+expiredAt.toMillis()) //now.getTime()은 현재 시간의 밀리초 값을 가져온다.
+                new Date( now.getTime()+expiredAt.toMillis()) //now.getTime()은 현재 시간의 밀리초 값을 가져온다.
                                                             // 여기에 expiredAt.toMillis()를 더해주면, 만료 시간을 계산할 수 있음.
 
 //                generateToken 메서드는 Member 객체와 Duration 타입의 만료 시간을 받아
@@ -81,7 +81,7 @@ public class TokenProvider {
 //      claims.getSubject()는 JWT 토큰에서 사용자 ID(userId)를 가져옵니다. 이는 UserDetails에서 username에 해당
 //        비밀번호는 보통 빈 문자열로 처리되며, 권한(authorities)는 이전에 생성한 리스트
 
-        return new UsernamePasswordAuthenticationToken(userDetails,null,authorities);
+        return new UsernamePasswordAuthenticationToken(userDetails, token, authorities);
 //        UsernamePasswordAuthenticationToken**은 Spring Security의 인증 객체
 //        userDetails는 인증된 사용자 정보를 담고, **권한(authorities)**는 해당 사용자가 가진 권한 목록
 //        null은 비밀번호로 사용되며, 보통 JWT 기반 인증에서는 비밀번호가 필요하지 않기 때문에 null로 설정

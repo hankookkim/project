@@ -10,7 +10,7 @@ public class SIgnUpResponseDTO {
 //    ignUpResponseDTO 클래스는 회원 가입 응답을 나타내는 **DTO
 //    (Data Transfer Object)**입니다. 이 클래스는 클라이언트에게 회원 가입 결과를 전달할 때 사용
 
-    private boolean success;   // 회원 가입 성공 여부를 나타내는 필드
+    private boolean successed;   // 회원 가입 성공 여부를 나타내는 필드
 //    성공 시 true, 실패 시 false 값이 담깁니다
 }
 

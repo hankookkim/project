@@ -10,6 +10,5 @@ public interface MemberMapper {
 
     Member findByUserId(String userId);
 
-    Member findById(Long id);
 
 }

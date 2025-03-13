@@ -59,7 +59,7 @@ public class WebSecurityConfig {
                                         new AntPathRequestMatcher("/write", GET.name()),
                                         new AntPathRequestMatcher("/detail", GET.name()),
                                         new AntPathRequestMatcher("/access-denied", GET.name()),
-                                        new AntPathRequestMatcher("/update", GET.name()),
+                                        new AntPathRequestMatcher("/update/*", GET.name()),
                                         new AntPathRequestMatcher("/refresh-token", POST.name()),
                                         new AntPathRequestMatcher("/join", POST.name()),
                                         new AntPathRequestMatcher("/login", POST.name()),
@@ -69,6 +69,7 @@ public class WebSecurityConfig {
                                 .anyRequest().authenticated() // 그 외의 요청은 인증 필요
                 )
                 .logout(AbstractHttpConfigurer::disable) // 로그아웃 설정 비활성화
+                // JWT 필터 추가
                 .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
 //        tokenAuthenticationFilter는 JWT 토큰을 검증하는 필터입니다. 이 필터는 UsernamePasswordAuthenticationFilter
 //        앞에 추가되며, JWT 기반 인증을 처리합니다.

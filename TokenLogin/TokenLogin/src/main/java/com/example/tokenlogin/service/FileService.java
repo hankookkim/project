@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 public class FileService {
 
     private final String UPLOADED_FOLDER=System.getProperty("user.home")+ File.separator+ "Desktop" + File.separator
-            + "java_2" + File.separator + "springboot" + File.separator + "uploads" + File.separator;
+            + "java_2" + File.separator + "springboot" + File.separator + "uploads";
 
 //    UPLOADED_FOLDER는 파일 저장 경로를 지정
 //     System.getProperty("user.home") → 현재 사용자 홈 디렉토리를 가져옵니다.

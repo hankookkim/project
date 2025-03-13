@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class UserInfoResponseDTO {
-    private Long Id;
+    private Long id;
     private String userName;
     private String userId;
     private Role role;

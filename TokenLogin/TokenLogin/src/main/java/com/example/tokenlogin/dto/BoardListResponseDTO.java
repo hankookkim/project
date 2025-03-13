@@ -12,7 +12,7 @@ public class BoardListResponseDTO {
 //    게시글 목록을 사용자에게 반환하기 위한 DTO 클래스입니다.
 //    이 클래스는 여러 개의 게시글과 마지막 페이지 여부를 담는 데 사용
 
-    List<Article> article; // 게시글 목록 (Article 객체 리스트)
+    List<Article> articles; // 게시글 목록 (Article 객체 리스트)
 //    Article 객체들을 포함하는 리스트입니다. 게시판에 올라온 여러 게시글들을 담고 있습니다.
 
     boolean last; // 마지막 페이지 여부

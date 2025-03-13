@@ -23,10 +23,10 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 //    TokenAuthenticationFilter는 JWT 토큰을 기반으로 사용자 인증을 처리하는 필터
 //    HTTP 요청에 포함된 JWT 토큰을 검사하고, 유효한 토큰이라면 사용자를 인증하여 SecurityContextHolder에 저장
 
-    private final TokenProvider tokenprovider;  //JWT 토큰의 생성, 검증, 클레임 추출 등을 처리하는 클래스
+    private final TokenProvider tokenProvider;  //JWT 토큰의 생성, 검증, 클레임 추출 등을 처리하는 클래스
     private final static String HEADER_AUTHORIZATION = "Authorization"; //HTTP 헤더에서 토큰을 추출할 때 사용할 키입니다. 일반적으로 Authorization 헤더를 통해 JWT 토큰을 전달
     private final static String TOKEN_PREFIX = "Bearer ";  //JWT 토큰 앞에 추가되는 접두어입니다. 예를 들어, Bearer <token> 형식으로 전달
-    private final TokenProvider tokenProvider;
+
 
 
     @Override
@@ -35,11 +35,11 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
         String requestURI = request.getRequestURI();
         log.info("Request URI: {}", requestURI);
-        if ("/refresh-Token".equals(requestURI)) {
+        if ("/refresh-token".equals(requestURI)) {
             filterChain.doFilter(request, response);
             return;
 
-//            /refresh-Token URI에 대해서는 인증을 건너뛰고, 요청을 그대로 필터 체인에 전달합니다.
+//            /refresh-token URI에 대해서는 인증을 건너뛰고, 요청을 그대로 필터 체인에 전달합니다.
 //            일반적으로 리프레시 토큰을 처리하는 엔드포인트이므로 인증을 확인하지 않습니다.
         }
 
@@ -48,9 +48,9 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         String token= resolveToken(request); //resolveToken(request) 메서드를 통해 요청 헤더에서 JWT 토큰을 추출
 
 
-        if(token != null && tokenprovider.validToken(token)==1){ //tokenProvider.validToken(token) 메서드를 통해 토큰의 유효성을 확인
+        if(token != null && tokenProvider.validToken(token)==1){ //tokenProvider.validToken(token) 메서드를 통해 토큰의 유효성을 확인
 
-            Authentication authentication= tokenprovider.getAuthentication(token);
+            Authentication authentication= tokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
 //            getAuthentication(token)**을 사용해 인증 정보를 추출하여 **SecurityContext**에 설정
 
@@ -72,6 +72,13 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         String bearerToken = request.getHeader(HEADER_AUTHORIZATION);
         //요청 헤더에서 Authorization 값을 가져옵니다.
 //        헤더는 보통 Authorization: Bearer <JWT> 형식으로 전달
+        if (bearerToken == null) {
+            log.warn("Authorization header is missing.");
+            return null;
+        }
+
+        log.info("Authorization header received: {}", bearerToken);
+
 
         if (bearerToken !=null && bearerToken.startsWith(TOKEN_PREFIX)){
 //            Authorization 헤더 값이 **Bearer **로 시작하는지 확인

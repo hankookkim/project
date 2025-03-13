@@ -13,6 +13,6 @@ public interface BoardMapper {
     int getArticleCnt();
     Article getArticleById(long id);
     void updateArticle(Article article);
-    void deleteArticle(long id);
+    void deleteABoardById(long id);
 
 }
